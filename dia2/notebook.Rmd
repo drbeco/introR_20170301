@@ -1,0 +1,83 @@
+---
+title: "Base Mtcars"
+output:
+  html_notebook: default
+  html_document: default
+---
+
+descricao da base.... 
+ 
+# Importando base de dados
+```{r}
+library(datasets)
+
+base <- mtcars
+```
+
+A base mtCArs . 
+
+```{r}
+head(base)
+```
+
+Tamanho da base.
+```{r}
+dim(base)
+```
+
+A base mtcars tem o tamanho: `r dim(base)[1]  `
+
+
+```{r}
+summary(base)
+
+pairs(mtcars, main = "mtcars data")
+cor(mtcars)
+
+plot(base$cyl,base$mpg)
+
+boo <- base$cyl == 8
+
+base[ boo, ]
+
+pesos <- base$wt
+
+summary(pesos)
+
+leves <- pesos < mean(pesos)
+leves
+
+carrosLeves <- base[leves , ]
+
+View(carrosLeves)
+
+#View(base)
+dim(base)
+base$kpl = base$mpg * 0.425144
+
+base2 <- base
+base2$mpg = NULL
+```
+
+
+```{r}
+
+plot(base$wt,base$mpg)
+```
+
+
+```mathjax
+x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+```
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file).
+```{r}
+library(DT)
+DT::datatable(mtcars)
+```
+
+```{r}
+library(dygraphs)
+lungDeaths <- cbind(mdeaths, fdeaths)
+dygraph(lungDeaths)
+```
+

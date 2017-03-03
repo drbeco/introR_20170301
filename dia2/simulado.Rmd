@@ -1,0 +1,82 @@
+---
+title: "Simulado"
+author: "R"
+date: "March 2, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Simulado 1
+
+### Carregando base de dados
+```{r warning=FALSE , error=FALSE ,include=FALSE}
+
+library(readr)
+simulado <- read_csv("~/GitHub/Introducao_R_20170301/bases/simulado.csv")
+#View(simulado)
+
+```
+
+## Tamanho do banco
+
+ 
+
+```{r pressure}
+dim(simulado)
+
+#summary(simulado)
+
+
+```
+
+## limpeza das colunas
+```{r}
+
+names(simulado)
+simulado$X1 = NULL
+simulado$prova = NULL
+
+simulado$acertos= 0
+
+df <- simulado[ ,-1]
+
+acertos <- rowSums(df)
+
+simulado$acertos = acertos
+
+```
+
+
+#Resumo
+```{r}
+summary(simulado$acertos)
+
+mean(simulado$acertos)
+sd(simulado$acertos)
+
+estranhos <- simulado$acertos < (mean(simulado$acertos) - sd(simulado$acertos) )
+
+
+
+
+
+```
+
+
+# Alunos com resultados estranhos
+```{r}
+library(DT)
+
+DT::datatable(simulado[estranhos,])
+```
+
+
+```{r}
+acerto_questao <- colSums(df)
+sort(acerto_questao)
+```
+
+
