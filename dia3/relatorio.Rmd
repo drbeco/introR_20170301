@@ -9,22 +9,60 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Importando base
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+ 
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+```{r }
 
-```{r cars}
-summary(cars)
+library(readr)
+baseLimpa <- read_csv("~/GitHub/Introducao_R_20170301/dia3/baseLimpa.csv")
+baseLimpa$X1 = NULL
+
 ```
 
-## Including Plots
+## PLots de temperatura
 
-You can also embed plots, for example:
+ 
 
 ```{r pressure, echo=FALSE}
-plot(pressure)
+hist(baseLimpa$Temp)
+
+table(baseLimpa$Day)
+
+```
+ 
+
+```{r}
+
+library(ggplot2)
+
+mes5 <- baseLimpa$Month == 5
+
+baseMes5 <- baseLimpa[mes5, ]
+
+g <- ggplot( baseMes5, aes( Day , Temp )  )
+g + geom_point() + geom_line()
+
+g + geom_point() + geom_smooth()  + geom_vline(xintercept = 20)+
+        xlab( "Dia" )
+
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+```{r}
+
+g <- ggplot( baseLimpa , aes( Day , Temp , colour = factor(Month)   )  )
+
+
+g + geom_line() + facet_grid( Month ~ . )
+
+
+```
+
+```{r}
+g + geom_line() + facet_grid(. ~ Month ) + geom_hline(yintercept = 91)
+```
+
